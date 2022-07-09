@@ -8,22 +8,24 @@ for a in range(0, 1000):
     seq.append(nucleotides[i])
 sequence=(''.join(seq))
 
-codons=[]
-i=0
-for codon in range (0, len(seq)//3):
-    triplet=seq[i]+seq[i+1]+seq[i+2]
-    codons.append(triplet)
-    i+=3
 
 standard_table = CodonTable.unambiguous_dna_by_id[1]
 stopC=standard_table.stop_codons
 
-sequence=[]
-for i in codons:
-    if i!=stopC[0] and i!=stopC[1] and i!=stopC[2]:
-        sequence.append(i)
+codons=[]
+i=0
+for codon in range (0, len(seq)//3):
+    triplet=seq[i]+seq[i+1]+seq[i+2]
+    i += 3
+    if triplet in stopC:
+        continue
+    else:
+        codons.append(triplet)
 
-seq_=''
-for i in sequence:
-    seq_+=i
-print(seq_)
+random_sequence=''
+for i in range(0,len(codons)):
+    random_sequence+=codons[i]
+
+generated_seq_file=open('/home/ekaterina/Desktop/Homeworks/HW1/data/random_generated_seq.txt','w')
+generated_seq_file.write(random_sequence)
+generated_seq_file.close
